@@ -2,6 +2,12 @@ var videosNode = document.getElementById("videos");
 
 [
     {
+        title:"EXRA-SPECIAL GUEST TEASER",
+        alt:"Kendall facing a blank figure with a question-mark",
+        img:"guestTeaser.png",
+        desc:"I hear you all like time-travel, so I've planned an interview with a guest-star not available in the present."
+    },
+    {
         title:"TASTE TESTING ANANKE CANAPÉS",
         alt:"a plate containing 3 canapés",
         img:"canapés.png",

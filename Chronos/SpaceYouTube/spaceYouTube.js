@@ -2,6 +2,24 @@ var videosNode = document.getElementById("videos");
 
 [
     {
+        title:"Cheimeros.4 under invasion",
+        alt:"Cheimeros, seen from a distance.",
+        desc:"Apparently I'm some sort of historian now. This is another video used to encourage people in the past to action: getting Cheimeros to surrender to Kedalion this time.",
+        img:"Cheimeros4.png"
+    },
+    {
+        title:"Achelia.3 under Klaycorp",
+        alt:"Achelia, seen from a distance.",
+        desc:"As I haven't had much time for my regular videos, I thought I'd show y'all some of the work I've been doing with the Chronos project. This video was given to the Tungsten Roses as a warning of how Achelia would turn out if they didn't rise up a bit more promptly.",
+        img:"Achelia3.png"
+    },
+    {
+        title:"KENDALL X KENDALL INTERVIEW",
+        alt:"Kendall.1 and Kendall.3 standing side-by-side with their heads touching, grinning at each-other.",
+        desc:"Having used time-travel to arrange for multiple Kendalls to meet, we discuss our lives and the differences in our work. More planned soon.",
+        img:"KendallKendall.png"
+    },
+    {
         title:"EXRA-SPECIAL GUEST TEASER",
         alt:"Kendall facing a blank figure with a question-mark",
         img:"guestTeaser.png",

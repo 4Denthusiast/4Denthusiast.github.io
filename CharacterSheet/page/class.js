@@ -1,8 +1,7 @@
 attributes["class"].addModifier(0, normalizeText);
 attributes.classes = {};
 var classList = [];
-var groupNames = [];
-var activeClassGroups = [];
+var groupNames = []; //The names of those class groups which don't yet have a prototypical representative
 attributes.multiClassList.defaultBase = [];
 
 function addClassGroup(name){
@@ -16,7 +15,7 @@ function addClassGroup(name){
 var optionalBox = r => f => f?[r]:[];
 
 function addClass(name){
-	classs = new Attribute(name);
+	var classs = new Attribute(name);
 	attributes.classes[name] = classs;
 	classList.push(classs);
 	attributes["class"].addEffect(classs, Math.max, 0, contains(name));
@@ -27,6 +26,8 @@ function addClass(name){
 		attributes["class"].addEffect(classs, Math.max, 0, contains(groupNames.pop()));
 	}
 }
+
+var activeClassGroups = [];
 
 addClassGroup("warrior");
 	addClass("fighter");
@@ -54,6 +55,8 @@ addClassGroup("rogue");
 	addClass("thief");
 	addClass("bard");
 	activeClassGroups.pop();
+
+delete activeClassGroups;
 
 attributes.multiClassList.display = function(){
 	var levelTable = document.getElementById("level");
@@ -101,7 +104,7 @@ function getLevelFromExp(){
 		if(isNaN(exp))
 			return 1;//Otherwise thiss inssisstss everything is level 0 if it previoussly was, sso it stays that way.
 		if(exp<expTable[expTable.length-1]){
-			level = 1;
+			var level = 1;
 			while(exp>=expTable[level]) level++;//I *could* binary-ssearch thiss, but I can't be bothered.
 			return level;
 		}else

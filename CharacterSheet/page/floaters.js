@@ -48,6 +48,10 @@ function floatersMouseMove(ev){
 }
 
 function makeFloaterDraggable(float, name){
+	if(!(float.style.left || float.style.right))
+		float.style.left = "0px";
+	if(!(float.style.top || float.style.bottom))
+		float.style.top = "0px";
 	float.addEventListener("mousemove", floatersMouseMove);
 	var button = float.getElementsByClassName("floaterHeader")[0];
 	if(button){

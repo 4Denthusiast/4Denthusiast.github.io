@@ -244,7 +244,8 @@ Comprehend Languages
 Reversible
 Range: Touch
 Duration: 5 rds./level
-Area of Effect: 1 speaking creature or written text
+Area of Effect: 1 speaking
+creature or written text
 Components: V, S, M
 Casting Time: 1 rd.
 Saving Throw: None
@@ -962,7 +963,8 @@ rather than a creature. It can be magically dispelled, or eliminated after recei
 of damage from area-effect spells, breath weapons, or similar attacks. If the caster
 attempts to send it beyond the allowed radius, the spell ends immediately.
 The material components of the spell are a piece of string and a bit of wood.
-Ventriloquism(Illusion/Phantasm)
+Ventriloquism
+(Illusion/Phantasm)
 Range: 10 yds./level, max. 90 yds.
 Duration: 4 rds. + 1 rd./level
 Area of Effect: 1 creature or object
@@ -1323,7 +1325,8 @@ fades. Note that this reveals invisible creatures. The dust fades in 1d4 rounds 
 round per caster level. Thus, glitterdust cast by a 3rd-level wizard lasts for four to seven
 rounds.
 The material component is ground mica.
-Hypnotic Pattern(Illusion/Phantasm)
+Hypnotic Pattern
+(Illusion/Phantasm)
 Range: 30 yds.
 Duration: Special
 Area of Effect: 30-ft. cube
@@ -2613,7 +2616,8 @@ with a penalty (such as -1, -2, etc.) at the discretion of the DM. Undead are no
 suggestion.
 The material components of this spell are a snake's tongue and either a bit of
 honeycomb or a drop of sweet oil.
-Tongues(Alteration)
+Tongues
+(Alteration)
 Reversible
 Range: 0
 Duration: 1 rd./level
@@ -2805,7 +2809,8 @@ rolls are decreased by 2. The effect persists until the character receives a cur
 spell or spends 1d3 weeks taking a complete rest to recover. Characters ignoring the
 contagion for more than a day or so may be susceptible to worse diseases at the discretion
 of the DM.
-Detect Scrying(Divination)
+Detect Scrying
+(Divination)
 Range: 0
 Duration: 1d6 turns + 1 turn/level
 Area of Effect: 120-ft. radius
@@ -3300,7 +3305,8 @@ slain. If no opponent exists to fight and the wizard can communicate with them, 
 summoned monsters can perform other services for the summoning wizard.
 The material components of this spell are a tiny bag and a small (not necessarily lit)
 candle.
-Otiluke's Resilient Sphere(Alteration, Evocation)
+Otiluke's Resilient Sphere
+(Alteration, Evocation)
 Range: 20 yds.
 Duration: 1 rd./level
 Area of Effect: 1-ft. diameter/level
@@ -4194,7 +4200,8 @@ Casting Time: 4
 Saving Throw: None
 This spell is the same as the 4th-level extension I spell, except it extends the duration
 of 1st-through 4th-level spells by 50%.
-Fabricate(Enchantment, Alteration)
+Fabricate
+(Enchantment, Alteration)
 Range: 5 yds./level
 Duration: Permanent
 Area of Effect: 1 cu. yd./level
@@ -5431,7 +5438,8 @@ level: spring flood, high tide, etc. This can make fords impassable, float groun
 and may even sweep away bridges, at the DM's option. It negates lower water and vice
 versa.
 The material component of the raise water spell is a small vial of water.
-Mass Suggestion(Enchantment/Charm)
+Mass Suggestion
+(Enchantment/Charm)
 Range: 30 yds.
 Duration: 4 turns + 4 turns/level
 Area of Effect: 1 creature/level
@@ -6728,7 +6736,8 @@ foot cube. Note that the creatures' saving throws are unaffected by the number o
 recipients (see the charm person and charm monster spells), but all target creatures are
 subject to a penalty of -2 on their saving throws because of the efficiency and power of
 this spell. The Wisdom bonus against charm spells does apply.
-Maze(Conjuration/Summoning)
+Maze
+(Conjuration/Summoning)
 Range: 5 yds./level
 Duration: Special
 Area of Effect: 1 creature

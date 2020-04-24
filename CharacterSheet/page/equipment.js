@@ -91,6 +91,7 @@ function Item(row, equipmentList, data){
 	this.encumbranceWeight.addEffect(equipmentList.encumbranceWeight, add, 0, identity);
 	this.initialized = data && data.initialized && true;
 	this.deleted = new Attribute("itemDeleted");
+	this.carried = new Attribute("itemCarried");
 	this.container = new Attribute("container");
 	this.emptyWeight = new Attribute("containerEmptyWeight");
 	this.maxCarry = new Attribute("containerMaxCarry");
@@ -102,11 +103,12 @@ function Item(row, equipmentList, data){
 	this.shield = new Attribute("armourShield");
 	this.magicalArmour = new Attribute("armourMagical");
 	this.skullduggeryArmourType = new Attribute("armourSkullduggeryType");
+	this.miscMagical = new Attribute("magical");
 	this.comments = new Attribute("comments");
 	this.gmComments = new Attribute("gmComments");
 	this.comments.defaultBase = "";
 	this.gmComments.defaultBase = "";
-	this.menuTraits = [this.container, this.emptyWeight, this.maxCarry, this.magicalContainer, this.active, this.value, this.armour, this.AC, this.shield, this.magicalArmour, this.skullduggeryArmourType, this.comments, this.gmComments];
+	this.menuTraits = [this.container, this.emptyWeight, this.maxCarry, this.magicalContainer, this.active, this.value, this.armour, this.AC, this.shield, this.magicalArmour, this.skullduggeryArmourType, this.miscMagical, this.comments, this.gmComments];
 	this.containerCarriedWeight = new Attribute("containerCarriedWeight");
 	this.container.addEffect(this.emptyWeight, mult, 1, identity);
 	this.container.addEffect(this.containerCarriedWeight, mult, 1, identity);
@@ -122,7 +124,8 @@ function Item(row, equipmentList, data){
 	this.containerCarriedWeight.addEffect(this.overWeight, set, 0, identity);
 	this.maxCarry.addEffect(this.overWeight, (w,m)=>m==0?false:w>m, 1, identity);
 	this.overWeight.display = displayContainerOverWeight(this);
-	this.deleted.addEffect(this.active, and, 0, not);
+	this.deleted.addEffect(this.carried, and, 0, not);
+	this.carried.addEffect(this.active, and, 0, identity);
 	this.active.addEffect(this.AC, mult, 0, identity);
 	this.active.addEffect(this.magicalArmour, mult, 0, identity);
 	this.active.addEffect(this.skullduggeryArmourType, mult, 0, identity);
@@ -134,20 +137,26 @@ function Item(row, equipmentList, data){
 	this.shield.addEffect(this.armourAC, mult, 1, not);
 	this.shield.addEffect(this.shieldAC, mult, 1, identity);
 	this.armourAC.addEffect(attributes.flatFootAC, setAC, 1, identity);
-	this.shieldAC.addEffect(attributes.flatFootAC, add, 2, identity);
+	this.shieldAC.addEffect(attributes.AC, add, 2, identity);
 	this.armour.addEffect(this.skullduggeryArmourType, mult, 0, identity);
 	attributes.classes.bard.addEffect(this.skullduggeryArmourType, (c,b) => (c>=4)&&!b?5:c, 1, identity);
 	this.skullduggeryArmourType.addEffect(attributes.skullduggeryArmourType, Math.max, 0, identity);
+	this.armour.item = this;
+	this.armour.display = armourDisplay;
 	this.value.addModifier(0, equipment.parseMoney);
 	this.number.addEffect(this.value, mult, 1, identity);
 	this.deleted.addEffect(this.value, mult, 1, not);
 	this.value.addEffect(attributes.wealth, add, 0, identity);
+	this.miscMagical.item = this;
+	this.miscMagical.display = miscMagicalDisplay;
+	this.comments.item = this;
+	this.comments.display = commentsDisplay;
 	if(data){
 		if("contained" in data)
 			this.addContained(data.contained);
 		if("gmComments" in data)
 			this.gmComments.defaultBase = gmDecrypt(data.gmComments, this.gmComments);
-		var menuTraitsSaveNames = ["container", "emptyWeight", "maxCarry", "magicalContainer", "active", "value", "armour", "AC", "shield", "magicalArmour", "skullduggeryArmourType", "comments"];
+		var menuTraitsSaveNames = ["container", "emptyWeight", "maxCarry", "magicalContainer", "active", "value", "armour", "AC", "shield", "magicalArmour", "skullduggeryArmourType", "miscMagical", "comments"];
 		for(var i=0; i<this.menuTraits.length; i++){
 			var name = menuTraitsSaveNames[i];
 			if(name in data){
@@ -157,6 +166,7 @@ function Item(row, equipmentList, data){
 	}
 	for(var i=0; i<this.menuTraits.length; i++)
 		this.menuTraits[i].recalculate();
+	this.updateDropped();
 }
 
 function markRowDeleted(){
@@ -170,7 +180,7 @@ Item.prototype.markDeleted = function(){
 	this.deleted.defaultBase = true;
 	this.deleted.recalculate();
 	if(this == equipment.currentMenuItem)
-		closeItemTraitsmenu();
+		closeItemTraitsMenu();
 	if(this.contained)
 		this.contained.markDeleted();
 }
@@ -185,6 +195,28 @@ Item.prototype.addContained = function(data){
 	this.contained = new EquipmentList(this.name.final+":", data);
 	this.contained.weight.addEffect(this.containerCarriedWeight, set, 0, identity);
 	this.contained.container = this;
+}
+
+Item.prototype.isDropped = function(){return this.equipmentList && this.equipmentList.isDropped();}
+EquipmentList.prototype.isDropped = function(){
+	if(this == equipment.droppedTable)
+		return true;
+	else if(!this.container)
+		return false;
+	else
+		return this.container.isDropped();
+}
+
+Item.prototype.updateDropped = function(dropped){
+	if(arguments.length<1)
+		dropped = this.isDropped();
+	this.carried.setDefaultBase(!dropped);
+	if(this.contained)
+		this.contained.updateDropped(dropped);
+}
+EquipmentList.prototype.updateDropped = function(dropped){
+	for(var i=1; i<this.table.rows.length; i++)
+		this.table.rows[i].item.updateDropped(dropped);
 }
 
 EquipmentList.prototype.markDeleted = function(){
@@ -252,15 +284,16 @@ function openItemTraitsMenu(ev){
 		item.guessValues();
 	itemTraitsMenu.style.display = "flex";
 	equipment.currentMenuItem = item;
-	item.armour.display = armourDisplay;
 	for(var i=0; i<item.menuTraits.length; i++){
 		name = item.menuTraits[i].name.toLowerCase();
 		el = itemTraitsInputElements[name];
 		if(el){
 			setContent(el, item.menuTraits[i].defaultBase);
-			item.menuTraits[i].setInput(itemTraitsInputElements[name]);
+			item.menuTraits[i].setInput(el);
 		}
 	}
+	item.carried.display = displayItemCarried;
+	item.carried.recalculate();
 	if(item.contained)
 		item.contained.outerDiv.className = "box highlighted";
 	item.name.recalculate();//Thiss is the easiesst way to update the title.
@@ -274,7 +307,7 @@ function closeItemTraitsMenu(){
 	itemTraitsMenu.style.display = "none";
 	for(var i=0; i<item.menuTraits.length; i++)
 		item.menuTraits[i].freezeInput();
-	item.armour.display = nil;
+	item.carried.display = nil;
 	if(item.contained)
 		item.contained.outerDiv.className = "box";
 }
@@ -313,6 +346,10 @@ var displayContainerOverWeight = item => function(ow){
 		item.contained.weight.outputElement.style.textDecoration = ow?"line-through":"";
 }
 
+function displayItemCarried(c){//This should be attached to the carried attribute of the selected item.
+	itemTraitsInputElements.active.disabled = !c;
+}
+
 var notContainedInItem = item => function(table){//Thiss function may break if csircular dependencsies already exisst, but should prevent that from happening.
 	if(!table.equipmentList)
 		return false;//Although the proficiencies aren't in any container, we don't want to put items there.
@@ -343,6 +380,7 @@ function shiftItemToNewContainer(ev){
 		item.encumbranceWeight.addEffect(newEqList.encumbranceWeight, add, 0, identity);
 	}
 	item.equipmentList = newEqList;
+	item.updateDropped();
 	//It would probably be a good idea to write a ssysstem of ssocketss: groupss of attributess together with ways in which they take effect, which can be convenieltly attached and detached
 	//but ah well.
 }
@@ -355,18 +393,36 @@ function setCarriedTable(table){
 	equipmentDiv.insertBefore(table.outerDiv, equipmentDiv.children[0]);
 	equipment.carriedTable = table;
 }
+function setDroppedTable(table){
+	if(equipment.droppedTable)
+		equipment.droppedTable.markDeleted();
+	table.updateDropped(true);
+	equipmentDiv.insertBefore(table.outerDiv, equipment.carriedTable.outerDiv.nextSibling);
+	equipment.droppedTable = table;
+}
 	
 setCarriedTable(new EquipmentList("Carried:"));
-equipment.droppedTable = new EquipmentList("Dropped:");
+setDroppedTable(new EquipmentList("Dropped:"));
 
 
 var itemTraitsMenu = document.getElementById("itemTraitsMenu");
 var containerTraitsMenu = document.getElementById("containerTraits");
 var armourTraitsMenu = document.getElementById("armourTraits");
+var magicalTraitsMenu = document.getElementById("magicalTraits");
 makeFloaterDraggable(itemTraitsMenu)
 document.getElementById("itemTraitsMenuCloseButton").removeEventListener("click", closeFloater);
 document.getElementById("itemTraitsMenuCloseButton").addEventListener("click", closeItemTraitsMenu);
-var armourDisplay = a => armourTraitsMenu.style.display = a?"":"none";
+function armourDisplay(a){
+	if(this.item == equipment.currentMenuItem)
+		armourTraitsMenu.style.display = a?"":"none";
+}
+function miscMagicalDisplay(a){
+	if(this.item == equipment.currentMenuItem)
+		magicalTraitsMenu.style.display = a?"":"none";
+}
+function commentsDisplay(n){
+	this.item.row.title = n && "note: "+n;
+}
 
 Item.prototype.guessValues = function(){
 	name = normalizeText(this.name.final);

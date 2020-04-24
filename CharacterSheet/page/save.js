@@ -4,7 +4,7 @@ function getSaveString(){
 	saveAllIn(data, document.getElementById("info"));
 	saveAllIn(data, document.getElementById("stats"));
 	data.weapons = formatTableForSave(weaponsTable);
-	saveAllIn(data, document.getElementById("middle bit").children[0]);
+	saveAllIn(data, document.getElementById("middleBit").children[0]);
 	data.languages = formatTableForSave(languagesTable);
 	saveAllIn(data, document.getElementById("health"));
 	saveAllIn(data, document.getElementById("experience"));
@@ -43,7 +43,7 @@ function formatTableForSave(table, format){
 	for(var i=0; i<table.rows.length; i++){
 		result[i] = {};
 		for(var j=0; j<format.length; j++){
-			if(format[j])
+			if(format[j] && table.rows[i].cells[j+1].unlocked !== false)
 				result[i][format[j]] = getContent(table.rows[i].cells[j+1]);
 		}
 	}
@@ -88,9 +88,21 @@ Item.prototype.toJSON = function(){
 }
 
 function save(){
-	var blob = new Blob([getSaveString()], {type: "text/x.character-sheet"});
+	var saveString = getSaveString();
+	prevSavedHash = CryptoJS.MD5(saveString).toString();
+	var blob = new Blob([saveString], {type: "text/x.character-sheet"});
 	saveAs(blob, getName(), true);
 }
+
+var prevSavedHash;
+window.addEventListener("load", ()=>(prevSavedHash = CryptoJS.MD5(getSaveString()).toString()));
+window.addEventListener("beforeunload", function(e){
+	var newSaveHash = CryptoJS.MD5(getSaveString()).toString();
+	if(newSaveHash != prevSavedHash){
+		return e.returnValue = "There seem to be unsaved changes. Are you sure you want to leave?";
+	}
+});
+	
 
 function getName(){
 	var titleType = attributes.titleType.final;
@@ -102,8 +114,13 @@ function getName(){
 }
 
 // Load 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-if("registerContentHandler" in navigator)
-	navigator.registerContentHandler("text/x.character-sheet", "character%20sheet.html?file=%s", "Andrew K.'s character sheet");
+if("registerContentHandler" in navigator){
+	try{
+		navigator.registerContentHandler("text/x.character-sheet", "character%20sheet.html?file=%s", "4Denthusiast's character sheet");
+	}catch(SecurityException){
+		console.log("Unable to register content handler.");
+	}
+}
 
 makeFloaterDraggable(document.getElementById("saveMenu"), "Save & load");
 var loadFileSelector = document.getElementById("loadFileSelector");
@@ -122,9 +139,13 @@ function useLoadedFileData(){
 	var data;
 	try{
 		fullData = JSON.parse(this.result);
-	}catch(SyntaxError){
-		alert("That file was not valid JSON. It is either the wrong file or from the wrong version of the character sheet.");
-		return;
+	}catch(e1){
+		try{
+			fullData = convertToNewtype(this.result);
+		}catch(e2){
+			alert("That file was not valid JSON. It is either the wrong file or from the wrong version of the character sheet.");
+			return;
+		}
 	}
 	if(fullData.version != 1){//I'll only change the version number when I make a change that actually breaks compatibility, and I'll try to avoid doing that.
 		alert("Unsupported save-file version: "+fullData.version);
@@ -141,7 +162,7 @@ function useLoadedFileData(){
 	loadAllIn(data, document.getElementById("info"));
 	loadAllIn(data, document.getElementById("stats"));
 	loadTableFromSave(data.weapons, weaponsTable);
-	loadAllIn(data, document.getElementById("middle bit").children[0]);
+	loadAllIn(data, document.getElementById("middleBit").children[0]);
 	loadTableFromSave(data.languages, languagesTable);
 	loadAllIn(data, document.getElementById("health"));
 	loadAllIn(data, document.getElementById("experience"));
@@ -152,11 +173,9 @@ function useLoadedFileData(){
 	spellTable.loadFromSave(data.memorisedSpells);
 	loadAllIn(data, document.getElementById("skullduggery"));
 	loadAllIn(data, document.getElementById("titleMenu"));
-	setCarriedTable(new EquipmentList("Carried:", data.carriedEquipment));
-	equipment.droppedTable.markDeleted();
-	equipment.droppedTable = new EquipmentList("Dropped:", data.droppedEquipment);
-	//Although the tables' order getss messsed up, I should at leasst keep these ones at the sstart.
-	equipmentDiv.insertBefore(equipment.droppedTable.outerDiv, equipment.carriedTable.outerDiv.nextSibling);
+	setCarriedTable(new EquipmentList("Carried:", data.carriedEquipment));//It'ss nicse how "carry" and "dropp" have the ssame length.
+	setDroppedTable(new EquipmentList("Dropped:", data.droppedEquipment));
+	prevSavedHash = CryptoJS.MD5(getSaveString()).toString();
 }
 
 function loadAllIn(data, element, name){

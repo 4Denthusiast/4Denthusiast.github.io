@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title id="title" class="output">0</title>
+		<title id="title" class="output">New character sheet</title>
 		<link rel="stylesheet" href="character%20sheet.css">
+		<link id="icon" rel="icon" href="icon.png">
 		<style id="gmNodeHiding">.gmHidden{display:none;}</style>
 		<meta charset="utf-8">
 	</head>
@@ -243,6 +244,10 @@
 									<span class="label">Illusion immunity</span>
 									<span class="output textfield"></span>
 								</div>
+								<div id="hearingAdjust">
+									<span class="label">Hearing adjust</span>
+									<span class="output textfield"></span>
+								</div>
 							</div>
 						</td>
 					</tr>
@@ -281,31 +286,31 @@
 							<tr id="encumbranceBase">
 								<td>Base</td>
 								<td class="output number"></td>
-								<td id="moveRateBase" class="output number"></td>
+								<td id="moveRateBase" class="output number floor"></td>
 								<td>None</td>
 							</tr>
 							<tr id="encumbranceLight">
 								<td>Light</td>
 								<td class="output number"></td>
-								<td id="moveRateLight" class="output number"></td>
+								<td id="moveRateLight" class="output number floor"></td>
 								<td>-1 Dex. bonus</td>
 							</tr>
 							<tr id="encumbranceMedium">
 								<td>Medium</td>
 								<td class="output number"></td>
-								<td id="moveRateMedium" class="output number"></td>
+								<td id="moveRateMedium" class="output number floor"></td>
 								<td>-1 to attack, no Dex. bonus</td>
 							</tr>
 							<tr id="encumbranceHeavy">
 								<td>Heavy</td>
 								<td class="output number"></td>
-								<td id="moveRateHeavy" class="output number"></td>
+								<td id="moveRateHeavy" class="output number floor"></td>
 								<td>-2 to attack, -1 AC, no Dex. bonus</td>
 							</tr>
 							<tr id="encumbranceSevere">
 								<td>Severe</td>
 								<td class="output number"></td>
-								<td id="moveRateSevere" class="output number"></td>
+								<td id="moveRateSevere" class="output number floor"></td>
 								<td>-4 to attack, -3 AC, no Dex. bonus</td>
 							</tr>
 						</tbody>
@@ -315,10 +320,10 @@
 					<table id="languagesTable">
 						<template>
 							<tr>
-								<td>
-								<td class="input textfield" contenteditable><!--The explicit contenteditable is necessary because this is in a template, so it's not found byt searches of the document.-->
-								<td class="input textfield number" contenteditable>
-								<td class="input textfield number" contenteditable>
+								<td></td>
+								<td class="input textfield" contenteditable></td><!--The explicit contenteditable is necessary because this is in a template, so it's not found byt searches of the document.-->
+								<td class="input textfield number" contenteditable></td>
+								<td class="input textfield number" contenteditable></td>
 							</tr>
 						</template>
 						<thead>
@@ -438,6 +443,7 @@
 						<th>HP</th>
 						<th>Wounds</th>
 						<th>AC</th>
+						<th>Attack adjust</th>
 						<th>Attack</th>
 						<th>Move rate</th>
 						<th title="If they have lots of equipment, it might be easier to put them as a container in the dropped table as well.">Equipment</th>
@@ -466,9 +472,9 @@
 						<th>Attack</th>
 						<th>Damage</th>
 						<th>Melee</th>
-						<th>Short</th>
-						<th>Medium</th>
-						<th>Long</th>
+						<th title="no adjust">Short</th>
+						<th title="-2 to hit">Medium</th>
+						<th title="-5 to hit">Long</th>
 						<th>S/M</th>
 						<th>L</th>
 					</tr>
@@ -591,16 +597,20 @@
 		<div id="equipment" style="flex-flow: row wrap;">
 			<!--created dynamically-->
 		</div>
-		<div id="itemTraitsMenu" class="floater" style="flex-flow:column; display:none; left:0px; top:0px;">
+		<div id="itemTraitsMenu" class="floater" style="display:none;">
 			<div class="floaterHeader">
 				<span class="label">Item traits: <span id="itemTraitsMenuItemName"></span></span>
 				<button id="itemTraitsMenuCloseButton"></button>
+			</div>
+			<div id="itemTraitsActive">
+				<span>Active/Equipped</span>
+				<input class="input" type="checkbox">
 			</div>
 			<div id="itemTraitsContainer">
 				<span>Container</span>
 				<input class="input submenuControl" type="checkbox">
 			</div>
-			<div id="containerTraits" class="submenu" style="margin-left:1em; flex-flow:column;">
+			<div id="containerTraits" class="submenu">
 				<div id="itemTraitsContainerEmptyWeight">
 					<span>Empty weight</span>
 					<span class="input textfield"></span>
@@ -614,10 +624,6 @@
 					<input type="checkbox" class="input">
 				</div>
 			</div>
-			<div id="itemTraitsActive">
-				<span>Active/Equipped</span>
-				<input class="input" type="checkbox">
-			</div>
 			<div id="itemTraitsValue">
 				<span>Value</span>
 				<span class="input textfield"></span>
@@ -626,7 +632,7 @@
 				<span>Armour/Shield</span>
 				<input class="input submenuControl" type="checkbox">
 			</div>
-			<div id="armourTraits" class="submenu" style="margin-left:1em; flex-flow:column;">
+			<div id="armourTraits" class="submenu">
 				<div id="itemTraitsArmourAC">
 					<span>AC</span>
 					<span class="input textfield number"></span>
@@ -651,6 +657,16 @@
 					</select>
 				</div>
 			</div>
+			<div id="itemTraitsMagical">
+				<span>Has misc. magical effects</span>
+				<input class="input subMenuControl" type="checkBox">
+			</div>
+			<div id="magicalTraits" class="submenu">
+				<div id="itemTraitsMagicalAffected">
+					<span>Attribute affected</span>
+					<span class="input textfield"></span>
+				</div>
+			</div>
 			<div id="itemTraitsComments" style="flex-flow: column;">
 				<span>Misc. notes:</span>
 				<div style="flex-flow: row;">
@@ -664,11 +680,12 @@
 				</div>
 			</div>
 		</div>
-		<div id="recycleBin" class="floater" style="left:0px; top:0px;">
+		<div id="recycleBin" class="floater">
 			<div class="floaterHeader">
 				<span class="label" title="Items in here will not be saved with the file.">Recycle bin</span>
 				<button></button>
 			</div>
+			<button id="clearBinButton">Empty</button>
 			<table id="recycleBinTable">
 				<thead>
 					<tr>
@@ -680,16 +697,19 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="saveMenu" class="floater" style="flex-flow: column; left:0px; top:0px;">
+		<div id="saveMenu" class="floater">
 			<div class="floaterHeader">
 				<span class="label">Save & load</span>
 				<button></button>
 			</div>
-			<button onclick="save()">Save file</button>
+			<div style="flex-flow:row">
+				<button style="flex-grow:1" onclick="save()">Save file</button>
+				<button style="flex-grow:1" onclick="loadFile()">Load file</button>
+			</div>
 			<input id="loadFileSelector" type="file" accept="text/plain,text/x.character-sheet,.dndc" onchange="loadFile()"/>
 		</div>
-		<div id="encryptionMenu" class="floater" style="flex-flow: row;left:0px; top:0px;">
-			<img src="//static.spiceworks.com/images/groups/0000/0286/security_guard_icon.png" style="display:none;" alt="">
+		<div id="encryptionMenu" class="floater" style="flex-flow: row;">
+			<img src="https://i.imgur.com/TbUgdFd.png" alt="The security guard is watching. Be safe." style="display:none; filter:brightness(0.973); margin-bottom:-12px;">
 			<div style="flex-flow:column;">
 				<div class="floaterHeader">
 					<span class="label">Encryption</span>
@@ -721,7 +741,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="titleMenu" class="floater" style="left:0px; top:0px;">
+		<div id="titleMenu" class="floater">
 			<div class="floaterHeader">
 				<span class="label">Title</span>
 				<button></button>
@@ -738,6 +758,32 @@
 			<div id="customTitle">
 				<span>Custom:</span>
 				<span class="input textfield"></span>
+			</div>
+		</div>
+		<div id="coloursMenu" class="floater">
+			<div class="floaterHeader">
+				<span class="label">Colours</span>
+				<button></button>
+			</div>
+			<button id="resetColoursButton">Reset</button>
+			<table>
+				<thead>
+					<tr>
+						<th>Use
+						<th>Colour
+				<tbody>
+					<tr><td>Background
+					<tr><td>Foreground
+					<tr><td>Input
+					<tr><td>Output
+					<tr><td>Highlight
+					<tr><td>Drag handle
+					<tr><td>Filler row
+			</table>
+			<div>
+				<span style="font-size:0.5rem; width:0; flex:1 1 0;">
+					It is mandatory for me to inform you that setting custom colours will store data on your computer so that you don't have to enter it every time. This page won't spy on you or use web storage if you use the default colour scheme.
+				</span>
 			</div>
 		</div>
 		<div id="floatersDock" class="floater" style="right:0px; bottom:0px;">
@@ -765,7 +811,9 @@
 			<script src="magic.js"></script>
 			<script src="combat.js"></script>
 			<script src="weapons.js"></script>
-			<script src="https://rawgit.com/eligrey/FileSaver.js/master/dist/FileSaver.min.js"></script>
+			<script src="colours.js"></script>
+			<script src="FileSaver.js"></script>
+			<script src="convert.js"></script>
 			<script src="save.js"></script>
 			<script src="title.js"></script>
 			<script src="https://rawgit.com/brix/crypto-js/develop/src/core.js"></script>
@@ -803,6 +851,7 @@
 			<script src="https://rawgit.com/brix/crypto-js/develop/src/tripledes.js"></script>
 			<script src="gmNotes.js"></script>
 			<script src="encryption.js"></script>
+			<script src="icon.js"></script>
 		</div>
 	</body>
 </html>

@@ -2,7 +2,7 @@ attributes.strengthAdjust.addEffect(attributes.strength, add, 0, identity);
 attributes.strength.addEffect(attributes.effectiveStrength, add, 0, str => str<=18?str:str+5);
 attributes.exceptionalStrengthAllowed.defaultBase = true;
 attributes.strength.addEffect(attributes.exceptionalStrengthAllowed, and, 0, s => s==18);
-attributes.exceptionalStrengthAllowed.addEffect(attributes.exceptionalStrength, mult, 0, identity);
+attributes.exceptionalStrengthAllowed.addEffect(attributes.exceptionalStrength, seAnd, 0, identity);
 attributes.exceptionalStrength.addEffect(attributes.effectiveStrength, add, 0, s => s<=0?0:s<=50?1:s<=75?2:s<=90?3:s<=99?4:5);
 attributes.effectiveStrength.addEffect(attributes.attackAdjust, set, 0, [-666,-5,-3,-3,-2,-2,-1,-1,0,0,0,0,0,0,0,0,0,1,1,1,2,2,2,3,3,3,4,4,5,6,7]);
 attributes.effectiveStrength.addEffect(attributes.damageAdjust, set, 0, [-666,-4,-2,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,1,1,2,3,3,4,5,6,7,8,9,10,11,12,14]);
@@ -49,6 +49,7 @@ attributes.charisma.addEffect(attributes.reactionAdjust, set, 0, [-666,-7,-6,-5,
 attributes.perceptionAdjust.addEffect(attributes.perception, add, 0, identity);
 attributes.perception.addEffect(attributes.surpriseAdjust, set, 0, [-666,-6,-4,-3,-2,-1,0,0,0,0,0,0,0,0,0,0,1,2,2,3,3,4,4,4,5,5]);
 attributes.perception.addEffect(attributes.illusionImmunity, set, 0, [-666,"—","—","—","—","—","—","—","—","—","—","—","—","—","—","—","—","—","—","1nd-level","2nd-level","3th-level","4th-level","5th-level","6th-level","7th-level"]);
+attributes.perception.addEffect(attributes.hearingAdjust, set, 0, [-666,-50,-45,-40,-35,-30,-25,-20,-15,-10,-5,0,0,0,0,0,5,10,15,20,25,30,35,40,45,50]);
 
 var basicStatsAttributes = [attributes.strength, attributes.dexterity, attributes.constitution, attributes.intelligence, attributes.wildom, attributes.charisma, attributes.perception];
 function rollStats(){

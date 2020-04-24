@@ -82,11 +82,11 @@ function addProficiencyRow(data){
 	row.children[2].className = "input number";
 	if(nonweapon){
 		row.appendChild(document.createElement("td"));
-		row.children[3].className = "output number";
+		row.children[3].className = "output number unlockable";
+		makeUnlockable(row.children[3]);
 		row.children[1].addEventListener("input", checkProficiencies);
 	}
 	row.slotsAttribute.setInput(row.children[2]);
-	row.slotsAttribute.addEffect(this.profs.slotsLeft, add, 1, times(-1));
 	if("name" in data){
 		setContent(row.children[1], data.name);
 		checkProficiencies.call(row.cells[1]);
@@ -96,6 +96,7 @@ function addProficiencyRow(data){
 		setContent(row.children[2], data.slots);
 	else
 		setContent(row.children[2], this.profs.slotsLeft.final);
+	row.slotsAttribute.addEffect(this.profs.slotsLeft, add, 1, times(-1));
 }
 	
 
@@ -122,8 +123,8 @@ function Proficiency(name, slots, ability, modifier){
 	this.slotsRequired = new Attribute(name+"SlotsRequired");
 	if(arguments.length>4){
 		this.slotsRequired.defaultBase = 1;
-		for(var i=0; i<arguments.length-4; i++)
-			arguments[4+i].addEffect(this.slotsRequired, and, 0, not);
+		for(var i=4; i<arguments.length; i++)
+			arguments[i].addEffect(this.slotsRequired, and, 0, not);
 	}
 	this.slotsRequired.addModifier(1, s => s+slots);
 	this.extraSlotsSpent = new Attribute(name+"SlotsSpent");//I'll keep thiss sseperate from the row's one for easier coupling/decoupling.
@@ -146,14 +147,16 @@ Proficiency.prototype.couple = function(row){
 	row.slotsAttribute.addEffect(this.extraSlotsSpent, add, 0, identity);
 	setContent(row.children[2], this.slotsRequired.final);
 	this.check.outputElement = row.children[3];
-	this.check.display(this.check.final);
+	row.children[3].attribute = this.check;
+	this.check.recalculate();
 }
 
 Proficiency.prototype.uncouple = function(){
 	this.row.proficiency = undefined;
 	this.row.slotsAttribute.removeEffect(this.extraSlotsSpent);
 	this.row.children[3].textContent = "";
-	this.check.outputElement = undefined;
+	delete this.check.outputElement;
+	delete this.row.children[3].attribute;
 	this.row = undefined;
 }
 

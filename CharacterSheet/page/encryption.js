@@ -21,7 +21,7 @@ function encrypt(data, gmSalt){
 	if(encryptionType==0)
 		result.data = data;
 	else if(encryptionType==1){
-		var password = getContent(passwordField);
+		var password = getContent(passwordField) || gmPassword;
 		var salt = encDetailsValid? encryptionDetails.salt : CryptoJS.lib.WordArray.random(16);
 		var key = CryptoJS.PBKDF2(password, salt, {keySize:16});
 		var iv = CryptoJS.lib.WordArray.random(8);
@@ -78,7 +78,7 @@ function decrypt(data){
 var decryptionAlgorithms = [
 	identity,//data.encryption is undefined for unencrypted files.
 	function(data, encryption, encryptionDetails){
-		var password = getContent(passwordField);
+		var password = getContent(passwordField) || gmPassword;
 		var salt = CryptoJS.enc.Base64.parse(encryption.salt);
 		encryptionDetails.salt = salt;
 		var key = CryptoJS.PBKDF2(password, salt, {keySize:16});
@@ -105,7 +105,7 @@ var decryptionAlgorithms = [
 			encryptionDetails.personal[name].key = CryptoJS.enc.Base64.parse(encryption.personal[name].key);
 		}
 		var username = getContent(usernameField);
-		var password = getContent(passwordField);
+		var password = getContent(passwordField) || gmPassword;
 		var personalEncryption = encryptionDetails.personal[username];
 		if(personalEncryption){
 			var personalKey = CryptoJS.PBKDF2(password, personalEncryption.salt, {keySize:4});
@@ -150,7 +150,7 @@ function requestManualKeyEntry(){
 
 function addPasswordToEncDetails(key, encryptionDetails){
 	var name = getContent(usernameField);
-	var password = getContent(passwordField);
+	var password = getContent(passwordField) || gmPassword;
 	if(!name || !password){
 		alert("The name and password fields in the encryption menu must be filled in for this encryption type.<br>Your password will not be added to the file.");
 	}else if(name in encryptionDetails.personal){

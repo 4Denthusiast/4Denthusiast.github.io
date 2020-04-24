@@ -191,8 +191,9 @@ function updateSpellSlot(ev){
 }
 
 spellTable.loadFromSave = function(data){
-	for(var i=0; i<data.length; i++){
-		var row = spellTable.tBodies[0].rows[i];
+	var tBody = spellTable.tBodies[0];
+	for(var i=0; i<data.length && i<tBody.rows.length; i++){
+		var row = tBody.rows[i];
 		if("cast" in data[i])
 			setContent(row.children[1].children[0], data[i].cast);
 		if("name" in data[i])

@@ -8,6 +8,7 @@ attributes.classes.warrior.addEffect(attributes.toHitAdjust, Math.max, 0, l => l
 attributes.classes.warrior.addEffect(attributes.unproficientAttackPenalty, Math.min, 0, l => l?2:Infinity);
 attributes.classes.wizard.addEffect(attributes.toHitAdjust, Math.max, 0, l => Math.floor((l-1)/3));
 attributes.classes.wizard.addEffect(attributes.unproficientAttackPenalty, Math.min, 0, l => l?5:Infinity);
+attributes.races.illithid.addEffect(attributes.toHitAdjust, Math.max, 1, times(9));
 
 attributes.toHitAdjust.addEffect(attributes.meleeAdjust, add, 0, identity);
 attributes.toHitAdjust.addEffect(attributes.missileAdjust, add, 0, identity);
@@ -42,6 +43,11 @@ attributes.classes.warrior.addEffect(attributes.savingThrowWand, Math.min, 0, [1
 attributes.classes.warrior.addEffect(attributes.savingThrowPetrification, Math.min, 0, [17,15,15,14,14,12,12,11,11,9,9,8,8,6,6,5,5,4]);
 attributes.classes.warrior.addEffect(attributes.savingThrowBreathWeapon, Math.min, 0, [20,17,17,16,16,13,13,12,12,9,9,8,8,5,5,4]);
 attributes.classes.warrior.addEffect(attributes.savingThrowSpell, Math.min, 0, [19,17,17,16,16,14,14,13,13,11,11,10,10,8,8,7,7,6]);
+attributes.classes.paladin.addEffect(attributes.savingThrowDeath, add, 1, p => p && -2);
+attributes.classes.paladin.addEffect(attributes.savingThrowWand, add, 1, p => p && -2);
+attributes.classes.paladin.addEffect(attributes.savingThrowPetrification, add, 1, p => p && -2);
+attributes.classes.paladin.addEffect(attributes.savingThrowBreathWeapon, add, 1, p => p && -2);
+attributes.classes.paladin.addEffect(attributes.savingThrowSpell, add, 1, p => p && -2);
 
 attributes.classes.wizard.addEffect(attributes.savingThrowDeath, Math.min, 0, [20,14,14,14,14,14,13,13,13,13,13,11,11,11,11,11,10,10,10,10,10,8]);
 attributes.classes.wizard.addEffect(attributes.savingThrowWand, Math.min, 0, [20,11,11,11,11,11,9,9,9,9,9,7,7,7,7,7,5,5,5,5,5,3]);

@@ -52,7 +52,8 @@ components, the bless spell requires holy water.
 This spell can be reversed by the priest to a curse spell that, when cast upon enemy
 creatures, lowers their morale and attack rolls by -1. The curse requires the sprinkling of
 unholy water.
-Combine(Evocation)
+Combine
+(Evocation)
 Sphere: All
 Range: Touch
 Duration: Special
@@ -370,7 +371,8 @@ herbs grow in temperate regions, while most spices grow in tropical regions. Mos
 sought as spell components or for magical research are rare or very rare. The results of
 this spell are always determined by the DM.
 The material component is the caster's holy symbol.
-Magical Stone(Enchantment)
+Magical Stone
+(Enchantment)
 Sphere: Combat
 Range: Touch
 Duration: Special
@@ -1754,7 +1756,8 @@ It is possible for a priest to devise his own curse, and it should be similar in
 those given here. Consult your DM. The subject of a bestow curse spell must be touched.
 If the victim is touched, a saving throw is still applicable; if it is successful, the effect is
 negated. The bestowed curse cannot be dispelled.
-Remove Paralysis(Abjuration)
+Remove Paralysis
+(Abjuration)
 Sphere: Protection
 Range: 10 yds./level
 Components: V, S
@@ -2401,7 +2404,8 @@ The material components for this spell are the priest's holy symbol, plus some m
 item from the recipient that is symbolic of his profession (a lockpick for a thief, etc.).
 This item, and any material component for the imbued spell, is consumed when the imbue
 with spell ability spell is cast.
-Lower Water(Alteration)
+Lower Water
+(Alteration)
 Reversible
 Sphere: Elemental (Water)
 Range: 120 yds.
@@ -2810,7 +2814,8 @@ operating in a radius of one-half mile for each level of the caster. In natural 
 settings--caves, cavern, etc.--the range is limited to 10 yards per caster level. In
 constructed settings (dungeons and towns), the spell will not function. The DM may limit
 the casting of this spell to once per month.
-Control Winds(Alteration)
+Control Winds
+(Alteration)
 Sphere: Weather
 Range: 0
 Duration: 1 turn/level
@@ -3410,7 +3415,8 @@ summoned remains for a maximum of one turn per level of the caster, or until it 
 sent back by a dispel magic spell, the reverse of this spell, dismiss fire elemental, or
 similar magic.
 Find the Path
-(Divination)Reversible
+(Divination)
+Reversible
 Sphere: Divination
 Range: Touch
 Duration: 1 turn/level
@@ -3872,7 +3878,8 @@ finished staff, engraved with woodland scenes, is then rubbed with the juice of 
 berries, and the end of it is thrust into the earth of the caster's grove while he casts a
 speak with plant spell, calling upon the staff to assist in time of need. The item is then
 charged with a magic that will last for many changes from staff to treant and back again.
-Chariot of Sustarre(Evocation)
+Chariot of Sustarre
+(Evocation)
 Sphere: Elemental (Fire), Creation
 Range: 10 yds.
 Duration: 12 hours

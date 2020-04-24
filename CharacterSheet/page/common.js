@@ -4,6 +4,7 @@ var add = (a,b) => a+b;
 var mult = (a,b) => a*b;
 var div = (a,b) => a/b;
 var and = (a,b) => a&&b;
+var seAnd = (a,b) => b&&a;
 var or = (a,b) => a||b;
 var seOr = (a,b) => b||a;
 var not = a => !a;
@@ -11,16 +12,12 @@ var eq = a => b => a==b;
 var geq = (a,b) => a>=b;
 var gt = (a,b) => a>b;
 var cutoff = a => b => b>=a;
-var concat;
-if(Array.concat)
-	concat = Array.concat;
-else
-	concat = (a,b) => a.concat(b);
 var contains = s => x => x && x.indexOf && x.indexOf(s)>=0;
 var times = a => b => a*b;
+var concat = Function.prototype.call.bind(Array.prototype.concat); //The recsiever shifted to the 1sst argument placse
 var normalizeText = s => !s ? "" : s.toLowerCase().replace(/[\-_\/, ]+/g, " ").replace(/[\(\)]/g, "");
 var nil = () => nil;//I could use any other function where I intend to use this, and () => undefined or () => false would perhapss make more ssensse, but thiss is more fun.
-var index = xs => i => i<xs.length?xs[i]:xs[xs.length-1];
+var index = xs => i => i<xs.length? i>=0?xs[i]:xs[0] :xs[xs.length-1];
 var chain = (f,g) => x => (f(x),g(x));
 function d(n,s,dr){
 	if(!s){ s = n; n = 1; }
@@ -63,32 +60,17 @@ Attribute.prototype.addModifier = function(priority, f){
 }
 
 Attribute.prototype.recalculate = function(logging){
-	prev = this.final;
-	if(this.inputElement){
-		if(logging)
-			console.log("input element found");
-		this.base = getContent(this.inputElement);
-		if(logging)
-			console.log("Value before number parsing:" + this.base);
-		if(this.numberInput){
-			this.base = parseFloat(this.base);
-			if(logging)
-				console.log("Value after number parsing: "+this.base);
-			if(isNaN(this.base))
-				this.base = this.defaultBase;
-		}
-	}else
-		this.base = this.defaultBase;
-	this.final = this.base;
+	var prev = this.final;
+	this.final = this.base = getContentWithDefault(this.inputElement, this.defaultBase);
 	if(!this.modifiers)//Debug code
 		console.log(this);
 	for (var i=0; i<this.modifiers.length; i++){
 		if(this.modifiers[i].length==2)
 			this.final = this.modifiers[i][1](this.final);
 		else{
-			that = this.modifiers[i][1];
-			mode = this.modifiers[i][2];
-			table = this.modifiers[i][3];
+			var that = this.modifiers[i][1];
+			var mode = this.modifiers[i][2];
+			var table = this.modifiers[i][3];
 			if(!that.initialized)
 				that.recalculate();
 			if(logging){
@@ -98,11 +80,16 @@ Attribute.prototype.recalculate = function(logging){
 		}
 	}
 	this.initialized = true;
-	this.display(this.final);
+	if(this.unlocked){
+		this.outputElement.title = "calculated: "+ this.final;
+		this.final = getContentWithDefault(this.outputElement, this.final);
+	}else
+		this.display(this.final);
 	if(this.final == prev || (typeof this.final == "number" && isNaN(this.final) && typeof prev == "number" && isNaN(prev)))
 		return;//Nothing has actually changed, there's not need to update anything.
 	for (var i=0; i<this.effects.length; i++)
 		this.effects[i].recalculate();
+	return this;//Debug code, trying to revent the variable this being optimised away.
 }
 
 function getContent(element){
@@ -117,6 +104,20 @@ function getContent(element){
 		return element.textContent;
 }
 
+function getContentWithDefault(element, defaultValue){
+	if(element){
+		var value = getContent(element);
+		if(Array.prototype.indexOf.call(element.classList, "number") >= 0){
+			value = parseNumber(value);
+			if(isNaN(value))
+				value = defaultValue;
+		}
+	}else
+		value = defaultValue;
+	return value;
+}
+	
+
 function setContent(element, value){
 	while("input" in element)
 		element = element.input;
@@ -126,12 +127,21 @@ function setContent(element, value){
 	else if(nodeName=="select" || nodeName=="input" || nodeName=="textarea")
 		element.value = value;
 	else{
-		if(typeof value == "number")
+		if(typeof value == "number"){
+			if(Array.prototype.indexOf.call(element.classList, "floor") >= 0)
+				value = Math.floor(value);
 			value = numberFormat.format(value);
-		element.textContent = value;
+		}
+		var textChild = Array.prototype.find.call(element.childNodes, n => n.nodeType = Node.TEXT_NODE);
+		(textChild || element).textContent = value;
 	}
-	if(element.attribute)
+	if(element.attribute && (element.attribute.inputElement == element))
 		element.attribute.recalculate();
+}
+
+Attribute.prototype.setDefaultBase = function(base){
+	this.defaultBase = base;
+	this.recalculate();
 }
 
 Attribute.prototype.removeEffect = function(that){
@@ -148,11 +158,6 @@ Attribute.prototype.setInput = function(el){
 	}else
 		el.addEventListener("change", useInput);
 	this.inputElement = el;
-	this.numberInput = false;
-	for(var j in el.classList){
-		if(el.classList[j]=="number")
-			this.numberInput = true;
-	}
 	this.recalculate();
 }
 
@@ -162,7 +167,6 @@ Attribute.prototype.removeInput = function(){
 	this.inputElement.attribute = undefined;
 	this.inputElement.removeEventListener("input", useInput);
 	this.inputElement.removeEventListener("change", useInput);
-	this.numberInput = false;
 	this.inputElement = undefined;
 }
 
@@ -182,7 +186,7 @@ function useInput(ev){
 }
 
 function writeToElement(final){
-	if(!this.outputElement)
+	if(!this.outputElement || this.unlocked)
 		return;
 	if(document.getElementById(this.name)){
 		if((typeof final == "number") && isNaN(final))
@@ -193,4 +197,32 @@ function writeToElement(final){
 	setContent(this.outputElement, final);
 }
 
+function toggleUnlock(){
+	var el = this.parentNode;
+	var prevOutput = Array.prototype.indexOf.call(el.classList, "output") >=0;
+	el.unlocked = prevOutput;
+	if(el.attribute){
+		if(prevOutput){
+			el.addEventListener("input", useInput);
+			el.attribute.unlocked = true;
+		}else{
+			el.removeEventListener("input", useInput);
+			el.attribute.unlocked = false;
+			delete el.title;
+		}
+		el.attribute.recalculate();
+	}else
+		setContent(el, "");
+	if(prevOutput){
+		el.className = el.className.replace("output", "input");
+		el.contentEditable = true;
+	}else{
+		el.className = el.className.replace("input", "output");
+		el.contentEditable = false;
+	}
+}
+
 var numberFormat = new Intl.NumberFormat([], {maximumFractionDigits:20, maximumSignificantDigits:14});
+function parseNumber(str){
+	return parseFloat(str.split(",").join(""));
+}

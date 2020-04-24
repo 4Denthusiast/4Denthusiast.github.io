@@ -27,8 +27,13 @@ function defaultAddRow(data){
 		for(var i=0; i<this.format.length; i++){
 			var cell = row.insertCell();
 			if(i in this.format){
-				cell.className = "input";
-				cell.contentEditable = true;
+				if(!this.unlockableFormat || !this.unlockableFormat[i]){
+					cell.className = "input";
+					cell.contentEditable = true;
+				}else{
+					cell.className = "output unlockable";
+					makeUnlockable(cell);
+				}
 			}
 		}
 	}
@@ -68,7 +73,7 @@ function checkEmptyRows(table, addOnly){
 }
 
 function makeRowDraggable(row, tableSuitable, onDelete, onUndelete){
-	handle = document.createElement("div");
+	var handle = document.createElement("div");
 	row.cells[0].appendChild(handle);
 	handle.draggable = true;
 	handle.addEventListener("dragstart", startDragRow, true);
@@ -113,7 +118,16 @@ function startDragRow(ev){
 
 var recycleBin = document.getElementById("recycleBinTable");
 makeFloaterDraggable(recycleBin.parentNode, "Recycle bin");
-document.getElementById("recycleBinTable").children[0].children[0].addEventListener("dragenter", rowDragEnter);
+recycleBin.children[0].children[0].addEventListener("dragenter", rowDragEnter);
+document.getElementById("clearBinButton").addEventListener("click", function(){
+	var sure = "sure"
+	do{
+		if(!confirm("Are you "+sure+" you want to clear the recycle bin?"))
+			return;
+		sure += " you're sure";
+	}while(Math.random()<0.7);
+	recycleBin.tBodies[0].innerHTML = "";
+});
 
 function endDragRow(ev){
 	if(fillerRow.parentNode){
@@ -163,6 +177,6 @@ initialiseTable(languagesTable);
 languagesTable.addRow();
 
 var followersTable = document.getElementById("followers");
-followersTable.format = ["name", "type", "maximumHP", "currentHP", "wounds", "AC", "attack", "moveRate", "equipment", "notes"];
+followersTable.format = ["name", "type", "maximumHP", "currentHP", "wounds", "AC", "attackAdjust", "attack", "moveRate", "equipment", "notes"];
 initialiseTable(followersTable);
 followersTable.addRow();

@@ -1,4 +1,4 @@
-attributeNames = [
+var attributeNames = [
 	"characterName",
 	"race",
 	"class",
@@ -55,6 +55,7 @@ attributeNames = [
 	"perceptionAdjust",
 	"surpriseAdjust",
 	"illusionImmunity",
+	"hearingAdjust",
 	"AC",
 	"flatFootAC",
 	"weightCarried",
@@ -101,7 +102,7 @@ for(var i=0; i<attributeNames.length; i++){
 		alert("Duplicate attribute name: "+attributeNames[i]);
 	attributes[attributeNames[i]] = new Attribute(attributeNames[i]);
 }
-attributeNames = undefined;//It'ss no longer necsesssary,
+delete attributeNames;//It'ss no longer necsesssary,
 
 var itemTraitsInputElements = {};
 attributes.skullduggery = {};

@@ -1,0 +1,223 @@
+body, div {
+	display: flex;
+	align-items: stretch;
+}
+
+body {
+	margin: 1em;
+	flex-direction: column;
+	font-family: times, serif;
+}
+
+.roughtable {
+	padding-top: 0.2em;
+	padding-left: 0.2em;
+	flex-flow: column;
+	align-items: stretch;
+}
+
+.roughtable > * {
+	flex-flow: row;
+	justify-content: flex-start;
+	align-content: center;
+	margin-bottom: 0.2em;
+}
+
+
+.roughtable > * > * {
+	flex: 1 auto;
+	margin-right: 0.2em;
+	margin-left: 0.8em;
+}
+
+.roughtable > * > :first-child {
+	margin-left: 0.2em;
+}
+
+.partRoughTableRow{
+	width:100%;
+	flex-wrap:wrap;
+}
+
+.partRoughTableRow > * {
+	flex: 1 auto;
+	margin-left: 0.8em;
+	align-items:stretch;
+	margin:.125em .25em;
+	border-style:solid none;
+	border-color:#e0e0ff;
+	border-width:.2em;
+}
+
+.partRoughTableRow .input, .partRoughTableRow .output {
+	padding: .4em;
+	margin: 0;
+}
+
+.partRoughTableRow .label {
+	margin: 0 0.2em;
+}
+
+.partRoughTableRow > *::before {
+	content:'';
+	top:0;
+	left:0;
+	bottom:0;
+	width:.2rem;
+	border-style:solid none;
+	border-width:.5rem;
+	border-color:inherit;
+}
+
+#exceptionalStrength {
+	border-color:#ffe0e0;
+}
+
+table, td, th {
+	border-collapse: collapse;
+	border: 0.4em solid transparent;
+	background-clip: padding-box !important;
+}
+
+.label {
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+
+input {
+	border: none;
+}
+
+.input {
+	background: #ffe0e0;
+}
+.output {
+	background: #e0e0ff;
+}
+.input, .output {
+	min-width: 2em;
+}
+
+.textfield {
+	align-self: stretch;
+	width: auto;
+	margin: 0.2em;
+	flex: 1;
+}
+
+.textfield::before {
+	content: "​";
+}
+
+.number {
+	text-align: center;
+}
+
+.box {
+	border: 1px solid black;
+	margin: 0em 1em 1em 0em;
+	padding: 0.2em;
+	flex: 1 0;
+	flex-basis: initial;
+}
+
+.box > table:only-child {
+	height: 100%;
+	width: 100%;
+}
+
+.dragHandle {
+	width:1em;
+	height:1em;
+}
+.dragHandle > * {
+	width: 100%;
+	height:100%;
+	background: repeating-linear-gradient(90deg, #808080, #808080 3px, #a0a0a0 3px, #a0a0a0 6px);
+	display:block;
+}
+
+*:has(>>.submenuControl:not(:checked)) + .submenu {
+	display:none;
+}/*CSS4, it'll hopefully work eventually.*/
+
+.floater {
+	position:fixed;
+	background-color: #f8f8f8;
+	border: 2px solid #202020;
+	padding: 0.5em;
+	flex-flow:column;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+
+.floaterHeader > button{
+	padding: 0em;
+}
+.floaterHeader > button::before{
+	content:"✕";
+}
+.floaterHeader>*:first-child{
+	flex:1;
+}
+
+.floatersDockButton {
+	padding: 0em 0em 0.2em 0em;
+	height: auto;
+}
+
+.fillerRow {
+	height:1.2em;
+	background: #c0c0c0;
+}
+
+.gm{
+	background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,0), rgba(0,0,0,0) 1em, rgba(0,0,0,0.05) 1em, rgba(0,0,0,0.05) 2em);
+}
+
+textarea {
+	font-family: initial;/*jusst to prevent the default monosspacse sstyle*/
+	resize: none;/*Flexsboxs's ssizes are perfectly good already.*/
+}
+
+#stats > table > tbody > tr {
+	height:2.5em;
+}
+
+#stats > div > div {
+	height:2.5em;
+}
+
+td > button {
+	height: 1.5em;
+	width: 100%;
+}
+
+#weapons th {
+	border: solid 1px #d0d0d0;
+}
+
+#weapons td:nth-child(4) {
+	text-align:center;
+}
+
+.meleeCheckbox +*+*, .meleeCheckbox +*+*+*{
+	display:none;
+}
+
+#equipment > .box {
+	flex-direction:column;
+	flex: 0 0 auto;
+}
+
+#equipment {
+	align-items: flex-start;
+}
+
+#equipment > .highlighted {/*The equipment tables are larger, sso the colour should be paler.*/
+	background-color: #ecffec;
+}
+
+.highlighted {
+	background-color: #d0ffd0;
+}

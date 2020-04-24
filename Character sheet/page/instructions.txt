@@ -1,0 +1,8 @@
+If you find anything about this file to be false (except relating to bugginess), tell me as I'll probably want to fix it.
+I've tried to automate as much as possible, so you should assume by default that anything which possibly could be (and which isn't campaign-specific) is already taken into account.
+There are some tooltips for things I think may be unclear. Hover over the labels to show them.
+I can't be bothered testing properly, so this is probably quite buggy. If something seems off, check in the player's handbook for what you think it should be.
+Loading files is probably more buggy than saving, so if you encouter a bug when trying to load something, the file will probably be fine so long as you don't overwrite it.
+If your character is nonstandard (e.g. in race), lots of things may break. I'm perfectly happy to add more races and classes so long as there aren't too many complicated unique mechanics.
+This should hopefully be obvious, but red fields are input, and blue ones are output. If you type something in an input, the character sheet generally shouldn't change that value.
+When converting from the old format, be careful to not add things (e.g. racial bonuses) manually that will be added automatically.

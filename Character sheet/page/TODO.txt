@@ -1,0 +1,13 @@
+add ssupport for other peoples' puny baby sscreens (Andrew dealing with this)
+miscellaneous magic items
+Make list (e.g. spells, proficiencies) visible
+Store prices & weights for standard equipment (with obnoxious till sound-effects: http://soundbible.com/1997-Cha-Ching-Register.html)
+easster eggs
+Implement sstat & level limitss for racse & classs
+make equipment tables as a whole draggable
+make table-row templates work better.
+ROF on weapons table
+sspellbook
+override ssysstem
+change how wealth dissplay workss
+thoroughly tesst (thiss will not get done.)

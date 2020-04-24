@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title id="title" class="output">0</title>
+		<link rel="stylesheet" href="character%20sheet.css">
+		<style id="gmNodeHiding">.gmHidden{display:none;}</style>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="info" class="roughtable box">
+			<div>
+				<div id="playerName">
+					<span class="label">Player name:</span>
+					<span class="input textfield"></span>
+				</div>
+				<div id="characterName">
+					<span class="label">Character name:</span>
+					<span class="input textfield"></span>
+				</div>
+				<div id="aliases">
+					<span class="label">Aliases:</span>
+					<span class="input textfield"></span>
+				</div>
+			</div>
+			<div>
+				<div id="race">
+					<span class="label">Race:</span>
+					<span class="input textfield"></span>
+				</div>
+				<div id="class">
+					<span class="label">Class:</span>
+					<span class="input textfield"></span>
+				</div>
+				<div id="alignment">
+					<span class="label">Alignment:</span>
+					<span class="input textfield"></span>
+				</div>
+			</div>
+			<div>
+				<div id="gender">
+					<span class="label">Gender:</span>
+					<span class="input textfield"></span>
+				</div>
+				<div id="age">
+					<span class="label">Age:</span>
+					<span class="input number textfield"></span>
+				</div>
+				<div id="handedness">
+					<span class="label">Handedness:</span>
+					<span class="input textfield"></span>
+				</div>
+			</div>
+			<div>
+				<div id="appearance">
+					<span class="label">Appearance:</span>
+					<span class="input textfield"></span>
+				</div>
+			</div>
+		</div>
+		<div id="stats" class="box">
+			<table>
+				<thead>
+					<tr>
+						<th>Stat</th>
+						<th>Base</th>
+						<th title="Don't add an adjust in here if it's anywhere else on the page.">Misc. Adjusts</th>
+						<th>Final</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="strength">
+						<td class="label">Strength</td>
+						<td class="input number"></td>
+						<td id="strengthAdjust" class="input number"></td>
+						<td class="output number"></td>
+						<td>
+							<div class="partRoughTableRow">
+								<div id="exceptionalStrength">
+									<span class="label">Exceptional strength</span>
+									<span class="input number textfield"></span>
+								</div>
+								<div id="attackAdjust">
+									<span class="label">Attack adjust</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="damageAdjust">
+									<span class="label">Damage adjust</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="weightAllow">
+									<span class="label">Weight allow</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="maxPress">
+									<span class="label">Max press</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="openDoors">
+									<span class="label">Open doors</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="bendBars">
+									<span class="label">Bend bars/Lift gates</span>
+									<span class="output number textfield"></span>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr id="dexterity">
+						<td class="label">Dexterity</td>
+						<td class="input number"></td>
+						<td id="dexterityAdjust" class="input number"></td>
+						<td class="output number"></td>
+						<td>
+							<div class="partRoughTableRow">
+								<div id="speedAdjust">
+									<span class="label">Speed adjust</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="missileAttackAdjust">
+									<span class="label">Missile attack adjust</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="defensiveAdjust">
+									<span class="label">Defensive adjust</span>
+									<span class="output number textfield"></span>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr id="constitution">
+						<td class="label">Constitution</td>
+						<td class="input number"></td>
+						<td id="constitutionAdjust" class="input number"></td>
+						<td class="output number"></td>
+						<td>
+							<div class="partRoughTableRow">
+								<div id="HPAdjust">
+									<span class="label">HP adjust</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="systemShock">
+									<span class="label">System shock</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="ressurectionChance">
+									<span class="label">Ressurection chance</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="regeneration">
+									<span class="label">Regeneration</span>
+									<span class="output number textfield"></span>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr id="intelligence">
+						<td class="label">Intelligence</td>
+						<td class="input number"></td>
+						<td id="intelligenceAdjust" class="input number"></td>
+						<td class="output number"></td>
+						<td>
+							<div class="partRoughTableRow">
+								<div id="languages">
+									<span class="label">Languages</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="maxSpellLevel">
+									<span class="label">Max spell level</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="chanceToLearn">
+									<span class="label">Chance to learn</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="maxSpellsPerLevel">
+									<span class="label">Max spells per level</span>
+									<span class="output number textfield"></span>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr id="wildom">
+						<td class="label">Wildom</td>
+						<td class="input number"></td>
+						<td id="wildomAdjust" class="input number"></td>
+						<td class="output number"></td>
+						<td>
+							<div class="partRoughTableRow">
+								<div id="mentalDefenceAdjust">
+									<span class="label">Mental defense adjust</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="bonusSpellsReadable"><!--Thiss way is much easier than actually using the bonusSpells attribute.-->
+									<span class="label">Bonus spells</span>
+									<span class="output textfield"></span>
+								</div>
+								<div id="spellFailure">
+									<span class="label">Spell failure</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="spellImmunity">
+									<span class="label">Spell immunity</span>
+									<span class="output textfield"></span>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr id="charisma">
+						<td class="label">Charisma</td>
+						<td class="input number"></td>
+						<td id="charismaAdjust" class="input number"></td>
+						<td class="output number"></td>
+						<td>
+							<div class="partRoughTableRow">
+								<div id="henchbeetles">
+									<span class="label">Henchmen</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="loyaltyBase">
+									<span class="label">Loyalty base</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="reactionAdjust">
+									<span class="label">Reaction adjust</span>
+									<span class="output number textfield"></span>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr id="perception">
+						<td class="label">Perception</td>
+						<td class="input number"></td>
+						<td id="perceptionAdjust" class="input number"></td>
+						<td class="output number"></td>
+						<td>
+							<div class="partRoughTableRow">
+								<div id="surpriseAdjust">
+									<span class="label">Surprise adjust</span>
+									<span class="output number textfield"></span>
+								</div>
+								<div id="illusionImmunity">
+									<span class="label">Illusion immunity</span>
+									<span class="output textfield"></span>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="middleBit" style="flex-flow:row;"><!--Does this even need an ID? It's probably a good idea.-->
+			<div style="flex-flow: column; flex:1;">
+				<span class="label">Notes:</span>
+				<textarea id="notes" class="box input"></textarea>
+				<div style="flex-flow: column; flex:1;" class="gmHidden">
+					<span class="label">GM notes:</span>
+					<textarea id="gmNotes" class="gm box input"></textarea>
+				</div>
+				<span id="wealth"><span class="label">Wealth:</span><span class="output"></span></span>
+				<textarea id="valuables" class="box input"></textarea> <!--Thiss will probably turn into an output at some point.-->
+			</div>
+			<div style="flex-flow: column;">
+				<div id="AC" class="box">
+					<span class="label">AC:</span>
+					<span class="output number textfield" style="width:2em;"></span>
+					<span class="label">Flat footed:</span>
+					<span id="flatFootAC" class="output number textfield" style="width:2em;"></span>
+				</div>
+				<div class="box">
+					<table id="encumbrance">
+						<thead>
+							<tr>
+								<th>Encumbrance<br>category</th>
+								<th>Weight</th>
+								<th>Movement<br>rate</th>
+								<th>Penalties</th><!--Thiss is ssort of jusst a table. If it'ss automated, it isn't really necsesssary.-->
+							</tr>
+						</thead>
+						<tbody>
+							<tr id="encumbranceBase">
+								<td>Base</td>
+								<td class="output number"></td>
+								<td id="moveRateBase" class="output number"></td>
+								<td>None</td>
+							</tr>
+							<tr id="encumbranceLight">
+								<td>Light</td>
+								<td class="output number"></td>
+								<td id="moveRateLight" class="output number"></td>
+								<td>-1 Dex. bonus</td>
+							</tr>
+							<tr id="encumbranceMedium">
+								<td>Medium</td>
+								<td class="output number"></td>
+								<td id="moveRateMedium" class="output number"></td>
+								<td>-1 to attack, no Dex. bonus</td>
+							</tr>
+							<tr id="encumbranceHeavy">
+								<td>Heavy</td>
+								<td class="output number"></td>
+								<td id="moveRateHeavy" class="output number"></td>
+								<td>-2 to attack, -1 AC, no Dex. bonus</td>
+							</tr>
+							<tr id="encumbranceSevere">
+								<td>Severe</td>
+								<td class="output number"></td>
+								<td id="moveRateSevere" class="output number"></td>
+								<td>-4 to attack, -3 AC, no Dex. bonus</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="box">
+					<table id="languagesTable">
+						<template>
+							<tr>
+								<td>
+								<td class="input textfield" contenteditable><!--The explicit contenteditable is necessary because this is in a template, so it's not found byt searches of the document.-->
+								<td class="input textfield number" contenteditable>
+								<td class="input textfield number" contenteditable>
+							</tr>
+						</template>
+						<thead>
+							<tr>
+								<th>Drag</th>
+								<th>Language</th>
+								<th>Spoken level</th>
+								<th>Written level</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div style="flex-flow: row;">
+					<div class="box">
+						<table id="savingThrows">
+							<tbody>
+								<tr>
+									<th>Paralyze/Death</th>
+									<td id="savingThrowDeath" class="output number"></td>
+								</tr>
+								<tr>
+									<th>Poison</th>
+									<td id="savingThrowPoison" class="output number"></td>
+								</tr>
+								<tr>
+									<th>Rods/Staves/Wands</th>
+									<td id="savingThrowWand" class="output number"></td>
+								</tr>
+								<tr>
+									<th>Petrification/Polymorph</th>
+									<td id="savingThrowPetrification" class="output number"></td>
+								</tr>
+								<tr>
+									<th>Breath weapon</th>
+									<td id="savingThrowBreathWeapon" class="output number"></td>
+								</tr>
+								<tr>
+									<th>Spell</th>
+									<td id="savingThrowSpell" class="output number"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="box">
+						<table id="health">
+							<thead>
+								<tr>
+									<th>Max.<br>HP</th>
+									<th>Current<br>HP</th>
+									<th>Wounds</th>
+									<th>Temporary<br>HP</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td id="maximumHP" class="input number"></td>
+									<td id="currentHP" class="input number"></td>
+									<td id="wounds" class="input"></td>
+									<td id="temporaryHP" class="input number"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="box">
+					<table>
+						<tr>
+							<th style="width:0;">Attack adjust</th>
+							<th>Melee</th>
+							<th>Missile</th>
+						</tr>
+						<tr>
+							<th>Proficient</th>
+							<td id="meleeAdjust" class="output textfield number"></td>
+							<td id="missileAdjust" class="output textfield number"></td>
+						</tr>
+						<tr>
+							<th>Unproficient</th>
+							<td id="unproficientMeleeAdjust" class="output textfield number"></td>
+							<td id="unproficientMissileAdjust" class="output textfield number"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="box">
+					<table id="level">
+						<thead>
+							<tr>
+								<th>Class</th>
+							</tr>
+							<tr>
+								<th>Level</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>Experience</th>
+								<td id="experience" class="input number">0</td>
+							</tr>
+							<tr>
+								<th>Next level</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="box">
+			<table id="followers">
+				<thead>
+					<tr>
+						<th>Drag</th>
+						<th>Follower</th>
+						<th>Species</th>
+						<th>Max. HP</th>
+						<th>HP</th>
+						<th>Wounds</th>
+						<th>AC</th>
+						<th>Attack</th>
+						<th>Move rate</th>
+						<th title="If they have lots of equipment, it might be easier to put them as a container in the dropped table as well.">Equipment</th>
+						<th>Misc. notes</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="box">
+			<table id="weapons">
+				<thead>
+					<tr>
+						<th rowspan="2">Drag</th>
+						<th rowspan="2">Weapon</th>
+						<th colspan="2">Adjusts</th>
+						<th colspan="4">Range</th>
+						<th colspan="2">Damage</th>
+						<th rowspan="2">Size</th>
+						<th rowspan="2">Type</th>
+						<th rowspan="2">Speed</th>
+						<th rowspan="2">Attacks per round</th>
+					</tr>
+					<tr>
+						<th>Attack</th>
+						<th>Damage</th>
+						<th>Melee</th>
+						<th>Short</th>
+						<th>Medium</th>
+						<th>Long</th>
+						<th>S/M</th>
+						<th>L</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div id="proficiencies" style="flex-flow:row wrap; align-items: flex-start;">
+			<div class="box">
+				<table id="weaponProficiencies">
+					<thead>
+						<tr>
+							<th>Drag</th>
+							<th>Weapon proficiency</th>
+							<th>Slots</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="box">
+				<table id="nonweaponProficiencies">
+					<thead>
+						<tr>
+							<th>Drag</th>
+							<th>Proficiency</th>
+							<th>Slots</th>
+							<th>Check</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="box" style="display:none;">
+				<table id="skullduggery">
+					<thead>
+						<tr>
+							<th>Skullduggery</th>
+							<th>Points<br>spent</th>
+							<th>Check</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id="pickPockets">
+							<td class="label">Pick pockets</td>
+							<td id="pickPocketsPointsSpent" class="input number"></td>
+							<td class="output number"></td>
+						</tr>
+						<tr id="openLocks">
+							<td class="label">Open locks</td>
+							<td id="openLocksPointsSpent" class="input number"></td>
+							<td class="output number"></td>
+						</tr>
+						<tr id="findRemoveTraps">
+							<td class="label">Find/Remove traps</td>
+							<td id="findRemoveTrapsPointsSpent" class="input number"></td>
+							<td class="output number"></td>
+						</tr>
+						<tr id="moveSilently">
+							<td class="label">Move silently</td>
+							<td id="moveSilentlyPointsSpent" class="input number"></td>
+							<td class="output number"></td>
+						</tr>
+						<tr id="hideInShadows">
+							<td class="label">Hide in shadows</td>
+							<td id="hideInShadowsPointsSpent" class="input number"></td>
+							<td class="output number"></td>
+						</tr>
+						<tr id="detectNoise">
+							<td class="label">Detect noise</td>
+							<td id="detectNoisePointsSpent" class="input number"></td>
+							<td class="output number"></td>
+						</tr>
+						<tr id="climbWalls">
+							<td class="label">Climb walls</td>
+							<td id="climbWallsPointsSpent" class="input number"></td>
+							<td class="output number"></td>
+						</tr>
+						<tr id="readLanguages">
+							<td class="label">Read languages</td>
+							<td id="readLanguagesPointsSpent" class="input number"></td>
+							<td class="output number"></td>
+						</tr>
+						<tr id="skullduggeryPointsLeft">
+							<td class="label">Skill points left:</td>
+							<td class="output number" colspan=2></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="spellBook" class="roughtable box" style="display:none;">
+				<div>
+					<span class="label">Spellbook</span>
+				</div>
+			</div>
+			<div class="box" style="display:none;">
+				<table id="spells">
+					<thead>
+						<tr>
+							<th>Spell type</th>
+							<th title="Has the sspell already been cast today, or is it sstill memorised">Cast</th>
+							<th>Name</th>
+							<th>Range</th>
+							<th>Duration</th>
+							<th>Casting time</th>
+							<th>AOE</th>
+							<th>Saving throw</th>
+							<th>Components</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<span class="label">Equipment:</span>
+		<div id="equipment" style="flex-flow: row wrap;">
+			<!--created dynamically-->
+		</div>
+		<div id="itemTraitsMenu" class="floater" style="flex-flow:column; display:none; left:0px; top:0px;">
+			<div class="floaterHeader">
+				<span class="label">Item traits: <span id="itemTraitsMenuItemName"></span></span>
+				<button id="itemTraitsMenuCloseButton"></button>
+			</div>
+			<div id="itemTraitsContainer">
+				<span>Container</span>
+				<input class="input submenuControl" type="checkbox">
+			</div>
+			<div id="containerTraits" class="submenu" style="margin-left:1em; flex-flow:column;">
+				<div id="itemTraitsContainerEmptyWeight">
+					<span>Empty weight</span>
+					<span class="input textfield"></span>
+				</div>
+				<div id="itemTraitsContainerMaxCarry">
+					<span>Max. weight</span>
+					<span class="input textfield"></span>
+				</div>
+				<div id="itemTraitsContainerMagical">
+					<span>Magical</span>
+					<input type="checkbox" class="input">
+				</div>
+			</div>
+			<div id="itemTraitsActive">
+				<span>Active/Equipped</span>
+				<input class="input" type="checkbox">
+			</div>
+			<div id="itemTraitsValue">
+				<span>Value</span>
+				<span class="input textfield"></span>
+			</div>
+			<div id="itemTraitsArmour">
+				<span>Armour/Shield</span>
+				<input class="input submenuControl" type="checkbox">
+			</div>
+			<div id="armourTraits" class="submenu" style="margin-left:1em; flex-flow:column;">
+				<div id="itemTraitsArmourAC">
+					<span>AC</span>
+					<span class="input textfield number"></span>
+				</div>
+				<div id="itemTraitsArmourShield">
+					<span>Shield</span>
+					<input class="input" type="checkbox">
+				</div>
+				<div id="itemTraitsArmourMagical">
+					<span>Magical</span>
+					<input class="input" type="checkbox">
+				</div>
+				<div id="itemTraitsArmourSkullduggeryType">
+					<span title="What this armour counts as for the purposes of thief skills">Skullduggery class</span>
+					<select class="input">
+						<option value="0">None</option>
+						<option value="1">Leather</option>
+						<option value="2">Elven chain</option>
+						<option value="3">Padded/Hide/Studded</option>
+						<option value="4">Chain/Ring mail</option>
+						<option value="5">Heavy</option>
+					</select>
+				</div>
+			</div>
+			<div id="itemTraitsComments" style="flex-flow: column;">
+				<span>Misc. notes:</span>
+				<div style="flex-flow: row;">
+					<span class="input textfield"></span>
+				</div>
+			</div>
+			<div id="itemTraitsGmComments" class="gmHidden" style="flex-flow:column;">
+				<span>GM notes:</span>
+				<div style="flex-flow:row;">
+					<span class="gm input textfield"></span>
+				</div>
+			</div>
+		</div>
+		<div id="recycleBin" class="floater" style="left:0px; top:0px;">
+			<div class="floaterHeader">
+				<span class="label" title="Items in here will not be saved with the file.">Recycle bin</span>
+				<button></button>
+			</div>
+			<table id="recycleBinTable">
+				<thead>
+					<tr>
+						<th>Drag</th>
+						<th>Rubbish</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div id="saveMenu" class="floater" style="flex-flow: column; left:0px; top:0px;">
+			<div class="floaterHeader">
+				<span class="label">Save & load</span>
+				<button></button>
+			</div>
+			<button onclick="save()">Save file</button>
+			<input id="loadFileSelector" type="file" accept="text/plain,text/x.character-sheet,.dndc" onchange="loadFile()"/>
+		</div>
+		<div id="encryptionMenu" class="floater" style="flex-flow: row;left:0px; top:0px;">
+			<img src="//static.spiceworks.com/images/groups/0000/0286/security_guard_icon.png" style="display:none;" alt="">
+			<div style="flex-flow:column;">
+				<div class="floaterHeader">
+					<span class="label">Encryption</span>
+					<button></button>
+				</div>
+				<div>
+					<span>Encryption type:</span>
+					<select id="encryptionType" class="input">
+						<option value="0" title="does not require a password">None</option>
+						<option value="1" title="encrypted with a single password">Simple</option>
+						<option value="2" title="Any of the passwords set can open the file.">Multiple-password</option>
+					</select>
+				</div>
+				<div>
+					<span>Password:</span>
+					<span id="password" class="input textfield"></span>
+				</div>
+				<div>
+					<span title="This reveals hidden notes. If it's the same as the other passsword, you only need to enter it here.">GM password:</span>
+					<span id="gmPassword" class="input textfield"></span>
+				</div>
+				<div>
+					<span title="This identifies you for loading files with multiple passwords.">Name:</span>
+					<span id="encryptionUsername" class="input textfield"></span>
+				</div>
+				<div>
+					<span title="Give this to anyone you want to add a password to this file (e.g. the GM)">Key:</span>
+					<span id="encryptionKey" class="output textfield" style="word-break:break-all; font-size:0.5em; -moz-user-select:text; -webkit-user-select:text;" tabindex=0></span>
+				</div>
+			</div>
+		</div>
+		<div id="titleMenu" class="floater" style="left:0px; top:0px;">
+			<div class="floaterHeader">
+				<span class="label">Title</span>
+				<button></button>
+			</div>
+			<div>
+				<span>Type:</span>
+				<select id="titleType" class="input">
+					<option value="default">Default</option>
+					<option value="full">Full name</option>
+					<option value="first">First name</option>
+					<option value="last">Last name</option>
+				</select>
+			</div>
+			<div id="customTitle">
+				<span>Custom:</span>
+				<span class="input textfield"></span>
+			</div>
+		</div>
+		<div id="floatersDock" class="floater" style="right:0px; bottom:0px;">
+			<div class="floaterHeader">Floating menu dock</div>
+			<table>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div id="scripts" hidden><!--If I defer sscriptss, they ssometimes don't load in order.-->
+			<script src="common.js"></script>
+			<script src="specific.js"></script>
+			<script src="floaters.js"></script>
+			<script src="tables.js"></script>
+			<script src="stats.js"></script>
+			<script src="race.js"></script>
+			<script src="class.js"></script>
+			<script src="skullduggery.js"></script>
+			<script src="display.js"></script>
+			<script src="proficiencies.js"></script>
+			<script src="equipment.js"></script>
+			<script src="encumbrance.js"></script>
+			<script src="deriving%20spells/baked%20priests.js"></script>
+			<script src="deriving%20spells/baked%20wizards.js"></script>
+			<script src="magic.js"></script>
+			<script src="combat.js"></script>
+			<script src="weapons.js"></script>
+			<script src="https://rawgit.com/eligrey/FileSaver.js/master/FileSaver.min.js"></script>
+			<script src="save.js"></script>
+			<script src="title.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/core.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/x64-core.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/md5.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/sha1.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/sha256.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/sha224.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/sha3.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/sha512.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/sha384.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/evpkdf.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/cipher-core.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/aes.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/lib-typedarrays.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/enc-base64.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/enc-utf16.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/format-hex.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/hmac.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/mode-cfb.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/mode-ctr-gladman.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/mode-ctr.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/mode-ecb.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/mode-ofb.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/pad-ansix923.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/pad-iso10126.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/pad-iso97971.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/pad-nopadding.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/pad-zeropadding.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/pbkdf2.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/rabbit-legacy.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/rabbit.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/rc4.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/ripemd160.js"></script>
+			<script src="https://rawgit.com/brix/crypto-js/develop/src/tripledes.js"></script>
+			<script src="gmNotes.js"></script>
+			<script src="encryption.js"></script>
+		</div>
+	</body>
+</html>

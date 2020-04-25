@@ -130,18 +130,70 @@ function loadFile(){
 	if(!file)
 		return;
 	var fileReader = new FileReader();
-	fileReader.onload = useLoadedFileData;
+	fileReader.onload = (function(){useLoadedFileData(this.result)});
 	fileReader.readAsText(file);
 }
 
-function useLoadedFileData(){
-	var fullData;
+var remoteLoadPath = "";
+var remoteLoadList = document.getElementById("remoteLoadList");
+updateRemoteLoadList();
+
+function updateRemoteLoadList(){
+    while(remoteLoadList.children.length > 1)
+        remoteLoadList.children[1].remove();
+    if(remoteLoadPath.length == 0) {
+        remoteLoadList.children[0].disabled = true;
+        updateRemoteLoadListWith("directory characters");
+    } else {
+        remoteLoadList.children[0].disabled = false;
+        var request = new XMLHttpRequest();
+        request.onload = () => updateRemoteLoadListWith(request.responseText);
+        request.open("GET", "../"+remoteLoadPath+"index.txt");
+        request.send();
+    }
+}
+
+function updateRemoteLoadListWith(rawList){
+    var lines = rawList.split("\n").map(s => s.trim()).filter(s => s.length > 0);
+    for(var i in lines) {
+        var line = lines[i];
+        var sPos = line.indexOf(" ");
+        var type = line.substring(0,sPos);
+        var name = line.substring(sPos+1);
+        var button = document.createElement("button");
+        if(type == "character") {
+            button.textContent = "🧑 "+name;
+            button.onclick = (() => {const thisName = name; return () => loadRemoteCharacter("../"+remoteLoadPath+thisName)})();
+        } else if(type == "directory") {
+            button.textContent = "📁 "+name;
+            button.onclick = (() => {const thisName = name; return () => {remoteLoadPath += thisName+"/"; updateRemoteLoadList()}})();
+        }
+        remoteLoadList.appendChild(button);
+    }
+}
+
+function loadRemoteCharacter(url){
+    var request = new XMLHttpRequest();
+    request.onload = () => useLoadedFileData(request.responseText);
+    request.open("GET", url);
+    request.send();
+}
+
+function remoteLoadListReturn(){
+    console.log(remoteLoadPath);
+    remoteLoadPath = remoteLoadPath.substring(0, 1+remoteLoadPath.lastIndexOf("/", remoteLoadPath.length-2));
+    console.log(remoteLoadPath);
+    updateRemoteLoadList();
+}
+
+function useLoadedFileData(rawData){
+    var fullData
 	var data;
 	try{
-		fullData = JSON.parse(this.result);
+		fullData = JSON.parse(rawData);
 	}catch(e1){
 		try{
-			fullData = convertToNewtype(this.result);
+			fullData = convertToNewtype(rawData);
 		}catch(e2){
 			alert("That file was not valid JSON. It is either the wrong file or from the wrong version of the character sheet.");
 			return;

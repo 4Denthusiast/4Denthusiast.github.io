@@ -1,0 +1,2 @@
+character example.dndc
+directory 4D setting

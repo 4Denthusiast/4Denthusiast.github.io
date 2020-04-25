@@ -1,0 +1,4 @@
+character wizard.dndc
+character priest.dndc
+character thief.dndc
+character fighter.dndc

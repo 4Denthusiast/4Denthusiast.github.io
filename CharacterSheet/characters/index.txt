@@ -1,2 +1,3 @@
-character example.dndc
+directory Twilight setting
 directory 4D setting
+directory Alternative setting

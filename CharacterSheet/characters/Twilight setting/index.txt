@@ -1,0 +1,10 @@
+character Fighter Mage.dndc
+character Fighter 2.dndc
+character Ranger.dndc
+character Peregrine.dndc
+character Cleric.dndc
+character Illusionist.dndc
+character Wixard.dndc
+character Fighter.dndc
+character Lagus priest.dndc
+character Thief.dndc

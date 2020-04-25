@@ -1,1 +1,11 @@
-character example.dndc
+character Insect Priest.dndc
+character Paladin.dndc
+character Mage (hasty).dndc
+character Ocean priest.dndc
+character Chaos priest.dndc
+character Mage.dndc
+character Fighter.dndc
+character Mage (illusionist).dndc
+character Light priest.dndc
+character Bard.dndc
+character Thief.dndc
